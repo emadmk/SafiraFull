@@ -9,7 +9,7 @@ interface Collection {
   description: string;
   total_pieces: number;
   sold_pieces: number;
-  price_per_piece: number;
+  price_usdt: number;
   is_active: boolean;
   available_pieces: number;
   created_at: string;
@@ -74,7 +74,7 @@ export const ManageCollectionsPage: React.FC = () => {
       name: collection.name,
       description: collection.description,
       total_pieces: collection.total_pieces,
-      price_usdt: collection.price_per_piece,
+      price_usdt: collection.price_usdt,
       is_active: collection.is_active,
     });
     setEditingId(collection.id);
@@ -287,7 +287,7 @@ export const ManageCollectionsPage: React.FC = () => {
                       <div className="text-sm font-medium text-white">{collection.name}</div>
                       <div className="text-xs text-gray-400">{collection.description.substring(0, 50)}...</div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-green-400">${collection.price_per_piece}</td>
+                    <td className="px-6 py-4 text-sm text-green-400">${collection.price_usdt}</td>
                     <td className="px-6 py-4 text-sm text-gray-300">{collection.total_pieces}</td>
                     <td className="px-6 py-4 text-sm text-purple-400">{collection.available_pieces}</td>
                     <td className="px-6 py-4">

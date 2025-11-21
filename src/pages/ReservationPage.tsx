@@ -9,7 +9,7 @@ interface Collection {
   description: string;
   total_pieces: number;
   sold_pieces: number;
-  price_per_piece: number;
+  price_usdt: number;
   available_pieces: number;
 }
 
@@ -162,7 +162,7 @@ export const ReservationPage: React.FC = () => {
                 <option value="">Choose a collection...</option>
                 {collections.map((collection) => (
                   <option key={collection.id} value={collection.id}>
-                    {collection.name} - ${collection.price_per_piece} ({collection.available_pieces} available)
+                    {collection.name} - ${collection.price_usdt} ({collection.available_pieces} available)
                   </option>
                 ))}
               </select>
@@ -176,7 +176,7 @@ export const ReservationPage: React.FC = () => {
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
                     <span className="text-gray-400">Price per piece:</span>
-                    <p className="text-green-400 font-bold">${selectedCollectionData.price_per_piece}</p>
+                    <p className="text-green-400 font-bold">${selectedCollectionData.price_usdt}</p>
                   </div>
                   <div>
                     <span className="text-gray-400">Available:</span>
@@ -227,11 +227,11 @@ export const ReservationPage: React.FC = () => {
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Total Amount:</span>
                   <span className="text-2xl font-bold text-green-400">
-                    ${selectedCollectionData.price_per_piece} USD
+                    ${selectedCollectionData.price_usdt} USDT
                   </span>
                 </div>
                 <p className="text-xs text-gray-400 mt-2">
-                  Payment will be processed via NOWPayments in cryptocurrency (USDT)
+                  Payment will be processed via NOWPayments in cryptocurrency (USDT TRC20)
                 </p>
               </div>
             )}
