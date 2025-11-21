@@ -51,10 +51,11 @@ export class PaymentController {
       const orderId = `ORDER-${Date.now()}-${reservation.id}`;
 
       // Create payment in NOWPayments
+      const payCurrency = currency || 'usdttrc20';
       const nowPayment = await NOWPaymentsService.createPayment({
         price_amount: amount,
-        price_currency: 'USDT',
-        pay_currency: currency || 'USDT',
+        price_currency: 'usd',
+        pay_currency: payCurrency,
         order_id: orderId,
         order_description: `Reservation for ${collection.name} - Piece #${reservation.piece_number}`,
       });
@@ -65,7 +66,7 @@ export class PaymentController {
         user_id: req.user!.userId,
         order_id: orderId,
         amount_usdt: amount,
-        currency: currency || 'USDT',
+        currency: payCurrency,
       });
 
       // Update payment with NOWPayments data
@@ -83,7 +84,7 @@ export class PaymentController {
           payment_id: nowPayment.payment_id,
           order_id: orderId,
           amount: amount,
-          currency: currency || 'USDT',
+          currency: payCurrency,
           pay_address: nowPayment.pay_address,
           pay_amount: nowPayment.pay_amount,
           payment_url: nowPayment.payment_url || `https://nowpayments.io/payment/?iid=${nowPayment.payment_id}`,
