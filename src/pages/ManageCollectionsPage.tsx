@@ -28,7 +28,7 @@ export const ManageCollectionsPage: React.FC = () => {
     name: '',
     description: '',
     total_pieces: 100,
-    price_per_piece: 100,
+    price_usdt: 100,
     is_active: true,
   });
 
@@ -74,7 +74,7 @@ export const ManageCollectionsPage: React.FC = () => {
       name: collection.name,
       description: collection.description,
       total_pieces: collection.total_pieces,
-      price_per_piece: collection.price_per_piece,
+      price_usdt: collection.price_per_piece,
       is_active: collection.is_active,
     });
     setEditingId(collection.id);
@@ -97,7 +97,7 @@ export const ManageCollectionsPage: React.FC = () => {
       name: '',
       description: '',
       total_pieces: 100,
-      price_per_piece: 100,
+      price_usdt: 100,
       is_active: true,
     });
   };
@@ -173,14 +173,15 @@ export const ManageCollectionsPage: React.FC = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Price per Piece (USD)
+                    Price per Piece (USDT)
                   </label>
                   <input
                     type="number"
                     min="1"
-                    value={formData.price_per_piece}
+                    step="0.01"
+                    value={formData.price_usdt}
                     onChange={(e) =>
-                      setFormData({ ...formData, price_per_piece: parseFloat(e.target.value) })
+                      setFormData({ ...formData, price_usdt: parseFloat(e.target.value) })
                     }
                     className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-purple-500"
                     required
