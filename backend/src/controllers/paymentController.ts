@@ -70,10 +70,12 @@ export class PaymentController {
       });
 
       // Update payment with NOWPayments data
+      const paymentUrl = nowPayment.invoice_url || nowPayment.payment_url || `https://nowpayments.io/payment/?iid=${nowPayment.payment_id}`;
+
       await PaymentModel.update(payment.id, {
         payment_id: nowPayment.payment_id,
         status: nowPayment.payment_status as any,
-        payment_url: nowPayment.payment_url || `https://nowpayments.io/payment/?iid=${nowPayment.payment_id}`,
+        payment_url: paymentUrl,
         nowpayments_data: nowPayment,
       });
 
@@ -87,7 +89,7 @@ export class PaymentController {
           currency: payCurrency,
           pay_address: nowPayment.pay_address,
           pay_amount: nowPayment.pay_amount,
-          payment_url: nowPayment.payment_url || `https://nowpayments.io/payment/?iid=${nowPayment.payment_id}`,
+          payment_url: paymentUrl,
           status: nowPayment.payment_status,
         },
       });

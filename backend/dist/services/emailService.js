@@ -59,21 +59,21 @@ const sendWelcomeEmail = async (to, fullName, userId) => {
     <body>
       <div class="container">
         <div class="header">
-          <h1>خوش آمدید!</h1>
+          <h1>Welcome!</h1>
         </div>
         <div class="content">
-          <h2>سلام ${fullName} عزیز</h2>
-          <p>به سیستم پیش‌فروش فرش‌های لوکس کرمان خوش آمدید.</p>
-          <p>حساب کاربری شما با موفقیت ایجاد شد و اکنون می‌توانید از تمامی امکانات پلتفرم استفاده کنید.</p>
-          <p>برای مشاهده کالکشن‌های موجود و رزرو قطعه دلخواه خود، به پنل کاربری خود مراجعه کنید.</p>
-          <a href="${env_1.config.urls.frontend}/dashboard" class="button">ورود به پنل کاربری</a>
-          <p style="margin-top: 30px; color: #666; font-size: 14px;">با تشکر،<br>تیم فرش‌های کرمان</p>
+          <h2>Hello ${fullName},</h2>
+          <p>Welcome to the Persian Kerman Luxury Carpet Pre-sale System.</p>
+          <p>Your account has been successfully created and you can now access all platform features.</p>
+          <p>To view available collections and reserve your desired piece, please visit your dashboard.</p>
+          <a href="${env_1.config.urls.frontend}/dashboard" class="button">Go to Dashboard</a>
+          <p style="margin-top: 30px; color: #666; font-size: 14px;">Best regards,<br>Persian Kerman Carpet Team</p>
         </div>
       </div>
     </body>
     </html>
   `;
-    return (0, exports.sendEmail)({ to, subject: 'خوش آمدید - ثبت نام موفق', html, userId });
+    return (0, exports.sendEmail)({ to, subject: 'Welcome - Registration Successful', html, userId });
 };
 exports.sendWelcomeEmail = sendWelcomeEmail;
 const sendReservationEmail = async (to, fullName, collectionName, pieceNumber, userId) => {
@@ -93,25 +93,25 @@ const sendReservationEmail = async (to, fullName, collectionName, pieceNumber, u
     <body>
       <div class="container">
         <div class="header">
-          <h1>رزرو موفق</h1>
+          <h1>Reservation Successful</h1>
         </div>
         <div class="content">
-          <h2>سلام ${fullName} عزیز</h2>
-          <p>رزرو شما با موفقیت ثبت شد!</p>
+          <h2>Hello ${fullName},</h2>
+          <p>Your reservation has been successfully recorded!</p>
           <div class="info-box">
-            <h3>جزئیات رزرو:</h3>
-            <p><strong>کالکشن:</strong> ${collectionName}</p>
-            <p><strong>شماره قطعه:</strong> ${pieceNumber}</p>
+            <h3>Reservation Details:</h3>
+            <p><strong>Collection:</strong> ${collectionName}</p>
+            <p><strong>Piece Number:</strong> ${pieceNumber}</p>
           </div>
-          <p>لطفاً در اسرع وقت نسبت به پرداخت اقدام کنید تا رزرو شما نهایی شود.</p>
-          <a href="${env_1.config.urls.frontend}/dashboard" class="button">مشاهده رزرو و پرداخت</a>
-          <p style="margin-top: 30px; color: #666; font-size: 14px;">با تشکر،<br>تیم فرش‌های کرمان</p>
+          <p>Please complete the payment as soon as possible to finalize your reservation.</p>
+          <a href="${env_1.config.urls.frontend}/dashboard" class="button">View Reservation & Pay</a>
+          <p style="margin-top: 30px; color: #666; font-size: 14px;">Best regards,<br>Persian Kerman Carpet Team</p>
         </div>
       </div>
     </body>
     </html>
   `;
-    return (0, exports.sendEmail)({ to, subject: `رزرو موفق - ${collectionName}`, html, userId });
+    return (0, exports.sendEmail)({ to, subject: `Reservation Successful - ${collectionName}`, html, userId });
 };
 exports.sendReservationEmail = sendReservationEmail;
 const sendPaymentConfirmationEmail = async (to, fullName, orderId, amount, txid, userId) => {
@@ -131,25 +131,25 @@ const sendPaymentConfirmationEmail = async (to, fullName, orderId, amount, txid,
     <body>
       <div class="container">
         <div class="header">
-          <h1>✓ پرداخت تایید شد</h1>
+          <h1>✓ Payment Confirmed</h1>
         </div>
         <div class="content">
-          <h2>سلام ${fullName} عزیز</h2>
-          <p>پرداخت شما با موفقیت تایید شد!</p>
+          <h2>Hello ${fullName},</h2>
+          <p>Your payment has been successfully confirmed!</p>
           <div class="info-box">
-            <h3>جزئیات پرداخت:</h3>
-            <p><strong>شماره سفارش:</strong> ${orderId}</p>
-            <p><strong>مبلغ:</strong> ${amount} USDT</p>
-            <p><strong>TXID:</strong> ${txid}</p>
+            <h3>Payment Details:</h3>
+            <p><strong>Order ID:</strong> ${orderId}</p>
+            <p><strong>Amount:</strong> ${amount} USDT</p>
+            <p><strong>Transaction ID:</strong> ${txid}</p>
           </div>
-          <p>رزرو شما نهایی شده و به زودی قطعه انتخابی شما آماده تحویل خواهد بود.</p>
-          <a href="${env_1.config.urls.frontend}/dashboard" class="button">مشاهده جزئیات</a>
-          <p style="margin-top: 30px; color: #666; font-size: 14px;">با تشکر،<br>تیم فرش‌های کرمان</p>
+          <p>Your reservation is now finalized and your selected piece will be ready for delivery soon.</p>
+          <a href="${env_1.config.urls.frontend}/dashboard" class="button">View Details</a>
+          <p style="margin-top: 30px; color: #666; font-size: 14px;">Best regards,<br>Persian Kerman Carpet Team</p>
         </div>
       </div>
     </body>
     </html>
   `;
-    return (0, exports.sendEmail)({ to, subject: 'پرداخت تایید شد', html, userId });
+    return (0, exports.sendEmail)({ to, subject: 'Payment Confirmed', html, userId });
 };
 exports.sendPaymentConfirmationEmail = sendPaymentConfirmationEmail;

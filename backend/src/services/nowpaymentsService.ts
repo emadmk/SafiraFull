@@ -33,6 +33,7 @@ interface PaymentResponse {
   order_id: string;
   order_description?: string;
   payment_url?: string;
+  invoice_url?: string;
   created_at: string;
   updated_at: string;
 }

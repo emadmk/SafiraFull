@@ -94,11 +94,17 @@ export const ReservationPage: React.FC = () => {
 
       const payment = paymentResponse.data.data;
 
+      // Log payment details for debugging
+      console.log('Payment created:', payment);
+
       // Redirect to payment URL
       if (payment.payment_url) {
+        console.log('Redirecting to:', payment.payment_url);
+        // Give user feedback before redirect
+        alert(`Payment created! Redirecting to payment page...\nPayment ID: ${payment.payment_id}\nAmount: ${payment.amount} ${payment.currency}`);
         window.location.href = payment.payment_url;
       } else {
-        setError('Payment URL not received. Please contact support.');
+        setError('Payment URL not received. Payment ID: ' + (payment.payment_id || 'N/A'));
         setLoading(false);
       }
     } catch (err: any) {
