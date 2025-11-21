@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const collectionController_1 = require("../controllers/collectionController");
+const errorHandler_1 = require("../middlewares/errorHandler");
+const router = (0, express_1.Router)();
+router.get('/', (req, res, next) => collectionController_1.CollectionController.getAll(req, res).catch(next));
+router.get('/:id', (req, res, next) => collectionController_1.CollectionController.getById(req, res).catch(next));
+router.get('/:id/available-pieces', (req, res, next) => collectionController_1.CollectionController.getAvailablePieces(req, res).catch(next));
+router.use(errorHandler_1.errorHandler);
+exports.default = router;
