@@ -44,13 +44,18 @@ class PaymentController {
             const orderId = `ORDER-${Date.now()}-${reservation.id}`;
             // Create payment in NOWPayments
             const payCurrency = currency || 'usdttrc20';
-            const nowPayment = await nowpaymentsService_1.NOWPaymentsService.createPayment({
+            const paymentParams = {
                 price_amount: amount,
                 price_currency: 'usd',
                 pay_currency: payCurrency,
                 order_id: orderId,
                 order_description: `Reservation for ${collection.name} - Piece #${reservation.piece_number}`,
-            });
+            };
+            // Add 'case' parameter for sandbox mode to simulate successful payment
+            if (env_1.config.nowPayments.sandbox) {
+                paymentParams.case = 'success';
+            }
+            const nowPayment = await nowpaymentsService_1.NOWPaymentsService.createPayment(paymentParams);
             // Save payment to database
             const payment = await Payment_1.PaymentModel.create({
                 reservation_id,

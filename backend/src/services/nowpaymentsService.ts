@@ -20,6 +20,7 @@ interface CreatePaymentParams {
   order_id: string;
   order_description?: string;
   ipn_callback_url?: string;
+  case?: string; // For sandbox testing
 }
 
 interface PaymentResponse {
