@@ -150,15 +150,24 @@ export const AdminDashboard: React.FC = () => {
             <h3 className="text-lg font-bold text-white">Quick Actions</h3>
           </div>
           <div className="p-6 grid md:grid-cols-3 gap-4">
-            <button className="p-4 bg-indigo-900/30 border border-indigo-700/50 rounded-lg hover:bg-indigo-900/50 transition-colors text-left">
+            <button
+              onClick={() => navigate('/admin/collections')}
+              className="p-4 bg-indigo-900/30 border border-indigo-700/50 rounded-lg hover:bg-indigo-900/50 transition-colors text-left"
+            >
               <h4 className="font-semibold text-indigo-300 mb-1">Manage Collections</h4>
               <p className="text-sm text-gray-400">Add and edit carpet collections</p>
             </button>
-            <button className="p-4 bg-purple-900/30 border border-purple-700/50 rounded-lg hover:bg-purple-900/50 transition-colors text-left">
+            <button
+              onClick={() => navigate('/admin/users')}
+              className="p-4 bg-purple-900/30 border border-purple-700/50 rounded-lg hover:bg-purple-900/50 transition-colors text-left"
+            >
               <h4 className="font-semibold text-purple-300 mb-1">View Users</h4>
               <p className="text-sm text-gray-400">List of all registered users</p>
             </button>
-            <button className="p-4 bg-green-900/30 border border-green-700/50 rounded-lg hover:bg-green-900/50 transition-colors text-left">
+            <button
+              onClick={() => alert('Settings page coming soon!')}
+              className="p-4 bg-green-900/30 border border-green-700/50 rounded-lg hover:bg-green-900/50 transition-colors text-left"
+            >
               <h4 className="font-semibold text-green-300 mb-1">Settings</h4>
               <p className="text-sm text-gray-400">Manage system settings</p>
             </button>

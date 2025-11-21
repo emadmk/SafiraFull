@@ -5,6 +5,9 @@ import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { UserDashboard } from './pages/UserDashboard';
 import { AdminDashboard } from './pages/AdminDashboard';
+import { ReservationPage } from './pages/ReservationPage';
+import { ManageCollectionsPage } from './pages/ManageCollectionsPage';
+import { UsersListPage } from './pages/UsersListPage';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -33,6 +36,7 @@ export const AppWrapper = () => {
           <Route path="/" element={<App />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/reserve" element={<ReservationPage />} />
           <Route
             path="/dashboard"
             element={
@@ -46,6 +50,22 @@ export const AppWrapper = () => {
             element={
               <ProtectedRoute>
                 <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/collections"
+            element={
+              <ProtectedRoute>
+                <ManageCollectionsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute>
+                <UsersListPage />
               </ProtectedRoute>
             }
           />
