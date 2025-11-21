@@ -28,14 +28,14 @@ export const ReservationPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Guest checkout fields
-  const [guestName, setGuestName] = useState('');
-  const [guestEmail, setGuestEmail] = useState('');
-  const [guestPhone, setGuestPhone] = useState('');
-
   useEffect(() => {
+    // Redirect to login if not authenticated
+    if (!token) {
+      navigate('/login?redirect=/reserve');
+      return;
+    }
     loadCollections();
-  }, []);
+  }, [token]);
 
   const loadCollections = async () => {
     try {
@@ -73,13 +73,6 @@ export const ReservationPage: React.FC = () => {
 
       if (pieceNumber < 1 || pieceNumber > collection.total_pieces) {
         setError(`Piece number must be between 1 and ${collection.total_pieces}`);
-        setLoading(false);
-        return;
-      }
-
-      // Check if user is logged in, if not require guest info
-      if (!token && (!guestName || !guestEmail)) {
-        setError('Please provide your name and email');
         setLoading(false);
         return;
       }
@@ -227,50 +220,6 @@ export const ReservationPage: React.FC = () => {
                 placeholder="You can add this later..."
               />
             </div>
-
-            {/* Guest Checkout (if not logged in) */}
-            {!token && (
-              <div className="border-t border-gray-600 pt-6">
-                <h3 className="text-lg font-semibold text-white mb-4">Your Information</h3>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      value={guestName}
-                      onChange={(e) => setGuestName(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      value={guestEmail}
-                      onChange={(e) => setGuestEmail(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Phone Number (Optional)
-                    </label>
-                    <input
-                      type="tel"
-                      value={guestPhone}
-                      onChange={(e) => setGuestPhone(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
 
             {/* Total Price */}
             {selectedCollectionData && (

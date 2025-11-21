@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 
 export const RegisterPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -11,6 +11,7 @@ export const RegisterPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,7 +20,9 @@ export const RegisterPage: React.FC = () => {
 
     try {
       await register(email, password, fullName, phone || undefined);
-      navigate('/dashboard');
+      // Redirect to the page user came from, or dashboard
+      const redirectTo = searchParams.get('redirect') || '/dashboard';
+      navigate(redirectTo);
     } catch (err: any) {
       setError(err.response?.data?.error || 'Registration failed');
     } finally {

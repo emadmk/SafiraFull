@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -9,6 +9,7 @@ export const LoginPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,7 +18,9 @@ export const LoginPage: React.FC = () => {
 
     try {
       await login(email, password);
-      navigate('/dashboard');
+      // Redirect to the page user came from, or dashboard
+      const redirectTo = searchParams.get('redirect') || '/dashboard';
+      navigate(redirectTo);
     } catch (err: any) {
       setError(err.response?.data?.error || 'Login failed');
     } finally {
