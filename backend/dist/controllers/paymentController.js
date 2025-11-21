@@ -9,6 +9,7 @@ const Setting_1 = require("../models/Setting");
 const nowpaymentsService_1 = require("../services/nowpaymentsService");
 const emailService_1 = require("../services/emailService");
 const errorHandler_1 = require("../middlewares/errorHandler");
+const env_1 = require("../config/env");
 class PaymentController {
     static async createPayment(req, res) {
         try {
@@ -59,7 +60,11 @@ class PaymentController {
                 currency: payCurrency,
             });
             // Update payment with NOWPayments data
-            const paymentUrl = nowPayment.invoice_url || nowPayment.payment_url || `https://nowpayments.io/payment/?iid=${nowPayment.payment_id}`;
+            // Use sandbox URL if in sandbox mode
+            const basePaymentUrl = env_1.config.nowPayments.sandbox
+                ? 'https://sandbox.nowpayments.io/payment'
+                : 'https://nowpayments.io/payment';
+            const paymentUrl = nowPayment.invoice_url || nowPayment.payment_url || `${basePaymentUrl}/?iid=${nowPayment.payment_id}`;
             await Payment_1.PaymentModel.update(payment.id, {
                 payment_id: nowPayment.payment_id,
                 status: nowPayment.payment_status,

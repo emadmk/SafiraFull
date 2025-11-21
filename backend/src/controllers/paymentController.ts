@@ -8,6 +8,7 @@ import { SettingModel } from '../models/Setting';
 import { NOWPaymentsService } from '../services/nowpaymentsService';
 import { sendPaymentConfirmationEmail } from '../services/emailService';
 import { AppError } from '../middlewares/errorHandler';
+import { config } from '../config/env';
 import crypto from 'crypto';
 
 export class PaymentController {
@@ -70,7 +71,11 @@ export class PaymentController {
       });
 
       // Update payment with NOWPayments data
-      const paymentUrl = nowPayment.invoice_url || nowPayment.payment_url || `https://nowpayments.io/payment/?iid=${nowPayment.payment_id}`;
+      // Use sandbox URL if in sandbox mode
+      const basePaymentUrl = config.nowPayments.sandbox
+        ? 'https://sandbox.nowpayments.io/payment'
+        : 'https://nowpayments.io/payment';
+      const paymentUrl = nowPayment.invoice_url || nowPayment.payment_url || `${basePaymentUrl}/?iid=${nowPayment.payment_id}`;
 
       await PaymentModel.update(payment.id, {
         payment_id: nowPayment.payment_id,
