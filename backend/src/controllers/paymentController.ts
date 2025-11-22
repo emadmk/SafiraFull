@@ -51,22 +51,15 @@ export class PaymentController {
       // Generate unique order ID
       const orderId = `ORDER-${Date.now()}-${reservation.id}`;
 
-      // Create payment in NOWPayments
-      const payCurrency = currency || 'usdttrc20';
-      const paymentParams: any = {
+      // Create invoice in NOWPayments (allows customer to select currency)
+      const invoiceParams = {
         price_amount: amount,
         price_currency: 'usd',
-        pay_currency: payCurrency,
         order_id: orderId,
         order_description: `Reservation for ${collection.name} - Piece #${reservation.piece_number}`,
       };
 
-      // Add 'case' parameter for sandbox mode to simulate successful payment
-      if (config.nowPayments.sandbox) {
-        paymentParams.case = 'success';
-      }
-
-      const nowPayment = await NOWPaymentsService.createPayment(paymentParams);
+      const nowInvoice = await NOWPaymentsService.createInvoice(invoiceParams);
 
       // Save payment to database
       const payment = await PaymentModel.create({
@@ -74,35 +67,29 @@ export class PaymentController {
         user_id: req.user!.userId,
         order_id: orderId,
         amount_usdt: amount,
-        currency: payCurrency,
+        currency: currency || 'multi', // Will be updated when customer selects
       });
 
-      // Update payment with NOWPayments data
-      // Use sandbox URL if in sandbox mode
-      const basePaymentUrl = config.nowPayments.sandbox
-        ? 'https://sandbox.nowpayments.io/payment'
-        : 'https://nowpayments.io/payment';
-      const paymentUrl = nowPayment.invoice_url || nowPayment.payment_url || `${basePaymentUrl}/?iid=${nowPayment.payment_id}`;
+      // Update payment with NOWPayments invoice data
+      const invoiceUrl = nowInvoice.invoice_url;
 
       await PaymentModel.update(payment.id, {
-        payment_id: nowPayment.payment_id,
-        status: nowPayment.payment_status as any,
-        payment_url: paymentUrl,
-        nowpayments_data: nowPayment,
+        payment_id: nowInvoice.id,
+        status: 'waiting',
+        payment_url: invoiceUrl,
+        nowpayments_data: nowInvoice,
       });
 
       res.status(201).json({
         success: true,
-        message: 'Payment created successfully',
+        message: 'Payment invoice created successfully',
         data: {
-          payment_id: nowPayment.payment_id,
+          payment_id: nowInvoice.id,
           order_id: orderId,
           amount: amount,
-          currency: payCurrency,
-          pay_address: nowPayment.pay_address,
-          pay_amount: nowPayment.pay_amount,
-          payment_url: paymentUrl,
-          status: nowPayment.payment_status,
+          currency: 'multi',
+          payment_url: invoiceUrl,
+          status: 'waiting',
         },
       });
     } catch (error: any) {

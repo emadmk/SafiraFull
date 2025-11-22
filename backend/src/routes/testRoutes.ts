@@ -130,4 +130,39 @@ router.get('/nowpayments/min-amount', async (req: Request, res: Response) => {
   }
 });
 
+// Test creating an invoice
+router.post('/nowpayments/test-invoice', async (req: Request, res: Response) => {
+  try {
+    const response = await axios.post(
+      'https://api.nowpayments.io/v1/invoice',
+      {
+        price_amount: 10,
+        price_currency: 'usd',
+        order_id: `TEST-${Date.now()}`,
+        order_description: 'Test Invoice for Currency Selection',
+        success_url: `${config.urls.frontend}/dashboard`,
+        cancel_url: `${config.urls.frontend}/reserve`,
+        ipn_callback_url: `${config.urls.backend}/api/payments/ipn`,
+      },
+      {
+        headers: {
+          'x-api-key': config.nowPayments.apiKey,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    res.json({
+      success: true,
+      data: response.data,
+      message: 'Open invoice_url in browser to see currency selection',
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      error: error.response?.data || error.message,
+    });
+  }
+});
+
 export default router;

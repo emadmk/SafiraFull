@@ -23,6 +23,16 @@ interface CreatePaymentParams {
   case?: string; // For sandbox testing
 }
 
+interface CreateInvoiceParams {
+  price_amount: number;
+  price_currency: string;
+  order_id: string;
+  order_description?: string;
+  ipn_callback_url?: string;
+  success_url?: string;
+  cancel_url?: string;
+}
+
 interface PaymentResponse {
   payment_id: string;
   payment_status: string;
@@ -88,6 +98,28 @@ export class NOWPaymentsService {
     } catch (error: any) {
       console.error('Error creating payment:', error.response?.data || error.message);
       throw new Error(error.response?.data?.message || 'Failed to create payment');
+    }
+  }
+
+  static async createInvoice(params: CreateInvoiceParams): Promise<any> {
+    try {
+      const ipnCallbackUrl = params.ipn_callback_url || `${config.urls.backend}/api/payments/ipn`;
+      const frontendUrl = config.urls.frontend;
+
+      const response = await apiClient.post('/invoice', {
+        price_amount: params.price_amount,
+        price_currency: params.price_currency,
+        order_id: params.order_id,
+        order_description: params.order_description,
+        ipn_callback_url: ipnCallbackUrl,
+        success_url: params.success_url || `${frontendUrl}/dashboard`,
+        cancel_url: params.cancel_url || `${frontendUrl}/reserve`,
+      });
+
+      return response.data;
+    } catch (error: any) {
+      console.error('Error creating invoice:', error.response?.data || error.message);
+      throw new Error(error.response?.data?.message || 'Failed to create invoice');
     }
   }
 
