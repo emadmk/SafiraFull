@@ -25,8 +25,18 @@ export const ManageReservationsPage: React.FC = () => {
         adminAPI.getReservations(),
         adminAPI.getPayments(),
       ]);
-      setReservations(resData.data.reservations || []);
-      setPayments(payData.data.payments || []);
+
+      console.log('📊 Admin Reservations Data:', resData.data);
+      console.log('💰 Admin Payments Data:', payData.data);
+
+      const reservationsList = resData.data.reservations || resData.data.data || [];
+      const paymentsList = payData.data.payments || payData.data.data || [];
+
+      console.log('✅ Reservations:', reservationsList.length, reservationsList);
+      console.log('✅ Payments:', paymentsList.length, paymentsList);
+
+      setReservations(reservationsList);
+      setPayments(paymentsList);
     } catch (error) {
       console.error('Failed to load data:', error);
     } finally {
