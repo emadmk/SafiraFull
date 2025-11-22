@@ -13,6 +13,7 @@ import collectionRoutes from './routes/collectionRoutes';
 import reservationRoutes from './routes/reservationRoutes';
 import paymentRoutes from './routes/paymentRoutes';
 import adminRoutes from './routes/adminRoutes';
+import testRoutes from './routes/testRoutes';
 
 dotenv.config();
 
@@ -44,6 +45,7 @@ app.use('/api/collections', collectionRoutes);
 app.use('/api/reservations', reservationRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/test', testRoutes);
 
 // 404 handler
 app.use('*', (req, res) => {
