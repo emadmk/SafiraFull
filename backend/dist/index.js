@@ -17,6 +17,7 @@ const collectionRoutes_1 = __importDefault(require("./routes/collectionRoutes"))
 const reservationRoutes_1 = __importDefault(require("./routes/reservationRoutes"));
 const paymentRoutes_1 = __importDefault(require("./routes/paymentRoutes"));
 const adminRoutes_1 = __importDefault(require("./routes/adminRoutes"));
+const testRoutes_1 = __importDefault(require("./routes/testRoutes"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 // Middlewares
@@ -43,6 +44,7 @@ app.use('/api/collections', collectionRoutes_1.default);
 app.use('/api/reservations', reservationRoutes_1.default);
 app.use('/api/payments', paymentRoutes_1.default);
 app.use('/api/admin', adminRoutes_1.default);
+app.use('/api/test', testRoutes_1.default);
 // 404 handler
 app.use('*', (req, res) => {
     res.status(404).json({

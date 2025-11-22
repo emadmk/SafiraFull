@@ -51,6 +51,26 @@ class NOWPaymentsService {
             throw new Error(error.response?.data?.message || 'Failed to create payment');
         }
     }
+    static async createInvoice(params) {
+        try {
+            const ipnCallbackUrl = params.ipn_callback_url || `${env_1.config.urls.backend}/api/payments/ipn`;
+            const frontendUrl = env_1.config.urls.frontend;
+            const response = await apiClient.post('/invoice', {
+                price_amount: params.price_amount,
+                price_currency: params.price_currency,
+                order_id: params.order_id,
+                order_description: params.order_description,
+                ipn_callback_url: ipnCallbackUrl,
+                success_url: params.success_url || `${frontendUrl}/dashboard`,
+                cancel_url: params.cancel_url || `${frontendUrl}/reserve`,
+            });
+            return response.data;
+        }
+        catch (error) {
+            console.error('Error creating invoice:', error.response?.data || error.message);
+            throw new Error(error.response?.data?.message || 'Failed to create invoice');
+        }
+    }
     static async getPaymentStatus(paymentId) {
         try {
             const response = await apiClient.get(`/payment/${paymentId}`);

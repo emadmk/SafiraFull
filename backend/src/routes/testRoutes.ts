@@ -130,6 +130,45 @@ router.get('/nowpayments/min-amount', async (req: Request, res: Response) => {
   }
 });
 
+// Check minimum amounts for multiple currencies
+router.get('/nowpayments/check-minimums', async (req: Request, res: Response) => {
+  try {
+    const currencies = ['usdttrc20', 'trx', 'btc', 'eth', 'usdterc20'];
+    const results: any = {};
+
+    for (const currency of currencies) {
+      try {
+        const response = await axios.get(`https://api.nowpayments.io/v1/min-amount`, {
+          headers: {
+            'x-api-key': config.nowPayments.apiKey,
+          },
+          params: {
+            currency_from: 'usd',
+            currency_to: currency,
+          },
+        });
+        results[currency] = {
+          min_amount: response.data.min_amount,
+          fiat_equivalent: response.data.fiat_equivalent,
+        };
+      } catch (error: any) {
+        results[currency] = { error: error.response?.data?.message || error.message };
+      }
+    }
+
+    res.json({
+      success: true,
+      data: results,
+      note: 'These are minimum payment amounts in USD for each currency',
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+});
+
 // Test creating an invoice
 router.post('/nowpayments/test-invoice', async (req: Request, res: Response) => {
   try {
