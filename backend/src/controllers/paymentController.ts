@@ -44,9 +44,8 @@ export class PaymentController {
         throw new AppError('Collection not found', 404);
       }
 
-      // Get base price from settings or use collection price
-      const basePriceStr = await SettingModel.get('base_price_usdt');
-      const amount = basePriceStr ? parseFloat(basePriceStr) : collection.price_usdt;
+      // Use collection price
+      const amount = collection.price_usdt;
 
       // Generate unique order ID
       const orderId = `ORDER-${Date.now()}-${reservation.id}`;
