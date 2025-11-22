@@ -100,7 +100,7 @@ export const ManageReservationsPage: React.FC = () => {
           <div className="bg-gray-800 rounded-lg p-4 border border-purple-700/50">
             <h3 className="text-gray-400 text-sm">Total Revenue</h3>
             <p className="text-2xl font-bold text-purple-400">
-              ${payments.reduce((sum: number, p: any) => sum + (p.amount_usdt || 0), 0).toFixed(2)}
+              ${payments.reduce((sum: number, p: any) => sum + (parseFloat(p.amount_usdt) || 0), 0).toFixed(2)}
             </p>
           </div>
         </div>
