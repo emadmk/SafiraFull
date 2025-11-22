@@ -29,9 +29,6 @@ export const ManageReservationsPage: React.FC = () => {
       const reservationsList = resData.data.data?.reservations || resData.data.reservations || [];
       const paymentsList = payData.data.data?.payments || payData.data.payments || [];
 
-      console.log('✅ Loaded Reservations:', reservationsList.length, reservationsList);
-      console.log('✅ Loaded Payments:', paymentsList.length, paymentsList);
-
       setReservations(reservationsList);
       setPayments(paymentsList);
     } catch (error) {

@@ -178,15 +178,6 @@ export class PaymentController {
       const signature = req.headers['x-nowpayments-sig'] as string;
       const payload = JSON.stringify(req.body);
 
-      console.log('📥 IPN Received:', {
-        hasSignature: !!signature,
-        signaturePrefix: signature?.substring(0, 20),
-        ipnSecretPrefix: config.nowPayments.ipnSecret?.substring(0, 20),
-        payloadLength: payload.length,
-        paymentId: req.body.payment_id,
-        orderId: req.body.order_id,
-      });
-
       // Verify IPN signature
       if (!NOWPaymentsService.verifyIpnSignature(signature, payload)) {
         console.error('❌ Invalid IPN signature');
