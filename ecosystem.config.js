@@ -3,7 +3,7 @@ module.exports = {
     {
       name: 'persian-carpet-backend',
       script: 'backend/dist/index.js',
-      cwd: '/home/user/SafiraFull',
+      cwd: '/root/SafiraFull',
       instances: 1,
       autorestart: true,
       watch: false,
@@ -35,7 +35,7 @@ module.exports = {
       name: 'persian-carpet-frontend',
       script: 'npx',
       args: 'serve -s build -l 5173',
-      cwd: '/home/user/SafiraFull',
+      cwd: '/root/SafiraFull',
       instances: 1,
       autorestart: true,
       watch: false,
