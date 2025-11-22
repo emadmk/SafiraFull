@@ -7,6 +7,7 @@ import { UserDashboard } from './pages/UserDashboard';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { ReservationPage } from './pages/ReservationPage';
 import { ManageCollectionsPage } from './pages/ManageCollectionsPage';
+import { ManageReservationsPage } from './pages/ManageReservationsPage';
 import { UsersListPage } from './pages/UsersListPage';
 
 // Protected Route Component
@@ -58,6 +59,14 @@ export const AppWrapper = () => {
             element={
               <ProtectedRoute>
                 <ManageCollectionsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/reservations"
+            element={
+              <ProtectedRoute>
+                <ManageReservationsPage />
               </ProtectedRoute>
             }
           />

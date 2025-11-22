@@ -149,13 +149,20 @@ export const AdminDashboard: React.FC = () => {
           <div className="px-6 py-4 border-b border-gray-700">
             <h3 className="text-lg font-bold text-white">Quick Actions</h3>
           </div>
-          <div className="p-6 grid md:grid-cols-3 gap-4">
+          <div className="p-6 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             <button
               onClick={() => navigate('/admin/collections')}
               className="p-4 bg-indigo-900/30 border border-indigo-700/50 rounded-lg hover:bg-indigo-900/50 transition-colors text-left"
             >
               <h4 className="font-semibold text-indigo-300 mb-1">Manage Collections</h4>
               <p className="text-sm text-gray-400">Add and edit carpet collections</p>
+            </button>
+            <button
+              onClick={() => navigate('/admin/reservations')}
+              className="p-4 bg-green-900/30 border border-green-700/50 rounded-lg hover:bg-green-900/50 transition-colors text-left"
+            >
+              <h4 className="font-semibold text-green-300 mb-1">View Reservations</h4>
+              <p className="text-sm text-gray-400">Manage orders and payments</p>
             </button>
             <button
               onClick={() => navigate('/admin/users')}
@@ -166,9 +173,9 @@ export const AdminDashboard: React.FC = () => {
             </button>
             <button
               onClick={() => alert('Settings page coming soon!')}
-              className="p-4 bg-green-900/30 border border-green-700/50 rounded-lg hover:bg-green-900/50 transition-colors text-left"
+              className="p-4 bg-yellow-900/30 border border-yellow-700/50 rounded-lg hover:bg-yellow-900/50 transition-colors text-left"
             >
-              <h4 className="font-semibold text-green-300 mb-1">Settings</h4>
+              <h4 className="font-semibold text-yellow-300 mb-1">Settings</h4>
               <p className="text-sm text-gray-400">Manage system settings</p>
             </button>
           </div>
